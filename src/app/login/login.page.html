@@ -11,23 +11,29 @@
       <ion-col size="12" size-xs="12" size-sm="12" size-md="6" size-lg="6">
         <ion-card>
           <ion-card-header>
-            <ion-card-title>
+            <ion-card-title class="ion-text-center">
               <ion-icon color="secondary" name="key"></ion-icon>
               Login
             </ion-card-title>
           </ion-card-header>
             <ion-card-content>
-              <form autocomplete="off">
+              <form [formGroup]="loginForm" autocomplete="off">
                    <ion-item>
                      <ion-label position="floating">Email</ion-label>
-                     <ion-input type="text"></ion-input>
+                     <ion-input formControlName="email" type="text"></ion-input>
                    </ion-item>
+                   <div *ngIf="formErrors.email.length"><span>{{formErrors.email}}</span></div>
                    <ion-item>
                       <ion-label position="floating">Password</ion-label>
-                      <ion-input type="password"></ion-input>
+                      <ion-input formControlName="password" type="password"></ion-input>
                     </ion-item>
-                    <ion-button color="secondary" expand="block" class="ion-margin-top">Login</ion-button>
-              </form>
+                    <div *ngIf="formErrors.password.length"><span>{{formErrors.password}}</span></div>
+                    <ion-button [disabled]="!loginForm.valid" color="secondary" expand="block" class="ion-margin-top">Login</ion-button>
+             
+                    <a [routerLink]="['/signup']" class="ion-margin-top">
+                     <ion-button color="light" expand="block">SignUp</ion-button>
+                    </a>
+                  </form>
             </ion-card-content>
         </ion-card>
       </ion-col>
