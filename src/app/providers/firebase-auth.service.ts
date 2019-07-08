@@ -10,8 +10,12 @@ export class FirebaseAuthService {
 
   async registerWithEmailAndPassword(email, password){
     // tslint:disable-next-line:prefer-const
+    try{
     let result = await this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password);
     await this.angularFireAuth.auth.currentUser.sendEmailVerification();
     return result;
+    } catch (error){
+      throw new Error(error);
+    }
   }
 }
