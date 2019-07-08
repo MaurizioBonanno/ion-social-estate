@@ -1,3 +1,4 @@
+import { HelperService } from './../providers/helper.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,6 +8,8 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(private helperService: HelperService) {
+    console.log('is platorm native', this.helperService.isNativePlatfomr());
+  }
 
 }
