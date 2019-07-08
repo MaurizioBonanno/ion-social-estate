@@ -40,6 +40,9 @@
               },
               {
                 "input": "src/app/app.scss"
+              },
+              {
+                "input": "node_modules/ngx-toastr/toastr.css"
               }
             ],
             "scripts": [],

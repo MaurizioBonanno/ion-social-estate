@@ -1,3 +1,4 @@
+import { WidgetUtilService } from './../providers/widget-util.service';
 import { FirebaseAuthService } from './../providers/firebase-auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -12,7 +13,7 @@ export class SignupPage implements OnInit {
   email: FormControl;
   password: FormControl;
 
-  constructor(private firebaseAuthservice: FirebaseAuthService) { }
+  constructor(private firebaseAuthservice: FirebaseAuthService, private widgetUtilService: WidgetUtilService) { }
 
   ngOnInit() {
     this.createFormControl();
@@ -51,9 +52,10 @@ export class SignupPage implements OnInit {
  async registerWithEmailAndPassword() {
    try{
      let result = await this.firebaseAuthservice.registerWithEmailAndPassword(this.email.value, this.password.value);
-     console.log('result', result);
+     this.widgetUtilService.showToast('Utente creato con successo, email di verifica inviata', 'SUCCESS');
    } catch ( error ){
-     console.log('error',error);
+     this.widgetUtilService.showToast('Errore:' + error.message, 'ERROR');
+     console.log('error', error);
    }
    
  }
