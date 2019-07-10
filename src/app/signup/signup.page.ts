@@ -2,6 +2,7 @@ import { WidgetUtilService } from './../providers/widget-util.service';
 import { FirebaseAuthService } from './../providers/firebase-auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,9 @@ export class SignupPage implements OnInit {
   // tslint:disable-next-line:no-inferrable-types
   showSignupSpinner: boolean = false;
 
-  constructor(private firebaseAuthservice: FirebaseAuthService, private widgetUtilService: WidgetUtilService) { }
+  constructor(private firebaseAuthservice: FirebaseAuthService, 
+              private widgetUtilService: WidgetUtilService,
+              private router: Router) { }
 
   ngOnInit() {
     this.createFormControl();
@@ -60,6 +63,8 @@ export class SignupPage implements OnInit {
      let result = await this.firebaseAuthservice.registerWithEmailAndPassword(this.email.value, this.password.value);
      this.widgetUtilService.showToast('Utente creato con successo, email di verifica inviata', 'SUCCESS');
      this.showSignupSpinner = false;
+     //reindirizzo alla home
+     this.router.navigate(['/home']);
    } catch ( error ){
      this.widgetUtilService.showToast('Errore:' + error.message, 'ERROR');
      this.showSignupSpinner = false;
