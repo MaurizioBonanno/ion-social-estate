@@ -30,7 +30,7 @@
                     <div *ngIf="formErrors.password.length"><span>{{formErrors.password}}</span></div>
                     <ion-button [disabled]="!loginForm.valid" color="secondary" expand="block" class="ion-margin-top">Login</ion-button>
              
-                    <a [routerLink]="['/signup']" class="ion-margin-top">
+                    <a [routerLink]="['/signup']" class="ion-margin-top text-nodecoration">
                      <ion-button color="light" expand="block">SignUp</ion-button>
                     </a>
                   </form>
