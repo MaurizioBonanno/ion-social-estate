@@ -13,6 +13,9 @@ export class SignupPage implements OnInit {
   email: FormControl;
   password: FormControl;
 
+  // tslint:disable-next-line:no-inferrable-types
+  showSignupSpinner: boolean = false;
+
   constructor(private firebaseAuthservice: FirebaseAuthService, private widgetUtilService: WidgetUtilService) { }
 
   ngOnInit() {
@@ -51,13 +54,18 @@ export class SignupPage implements OnInit {
 
  async registerWithEmailAndPassword() {
    try{
+     //visualizzo spinner
+     this.showSignupSpinner = true;
+// tslint:disable-next-line: prefer-const
      let result = await this.firebaseAuthservice.registerWithEmailAndPassword(this.email.value, this.password.value);
      this.widgetUtilService.showToast('Utente creato con successo, email di verifica inviata', 'SUCCESS');
+     this.showSignupSpinner = false;
    } catch ( error ){
      this.widgetUtilService.showToast('Errore:' + error.message, 'ERROR');
+     this.showSignupSpinner = false;
      console.log('error', error);
    }
-   
+
  }
 
 }

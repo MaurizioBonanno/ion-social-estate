@@ -31,7 +31,11 @@
                           <ion-input formControlName="password" type="password"></ion-input>
                         </ion-item>
  
-                        <ion-button (click)="registerWithEmailAndPassword()" [disabled]="!signUpForm.valid" color="secondary" expand="block" class="ion-margin-top">SignUp</ion-button>
+                        <ion-button (click)="registerWithEmailAndPassword()" [disabled]="!signUpForm.valid" color="secondary" expand="block" class="ion-margin-top">
+                          SignUp
+                        
+                          <ion-spinner name="dots" *ngIf="showSignupSpinner"></ion-spinner>
+                        </ion-button>
                  
                         <a [routerLink]="['/login']" class="ion-margin-top text-nodecoration">
                          <ion-button color="light" expand="block">Go to Login</ion-button>
