@@ -1,3 +1,4 @@
+import { FirebaseAuthService } from './providers/firebase-auth.service';
 import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
@@ -22,10 +23,13 @@ export class AppComponent {
     }
   ];
 
+  isLoggedIn = false;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private firebaseAuthService: FirebaseAuthService
   ) {
     this.initializeApp();
   }
@@ -34,6 +38,19 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.checkUser();
     });
+  }
+
+  checkUser(){
+     this.firebaseAuthService.getLoggedInUser().subscribe( user => {
+       if(user){
+         this.isLoggedIn = true;
+         console.log('Utente autenticato , console di app component');
+       } else {
+         this.isLoggedIn = false;
+         console.log('Utente non autenticato , console di app component');
+       }
+     });
   }
 }

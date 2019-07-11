@@ -7,7 +7,7 @@
 <ion-content>
 
   <ion-grid fixed>
-    <ion-row class="ion-justify-content-center">
+    <ion-row class="ion-justify-content-center" *ngIf="!showPageLoader">
       <ion-col size="12" size-xs="12" size-sm="12" size-md="6" size-lg="6">
         <ion-card>
           <ion-card-header>
@@ -27,18 +27,38 @@
                       <ion-label position="floating">Password</ion-label>
                       <ion-input formControlName="password" type="password"></ion-input>
                     </ion-item>
-                    <div *ngIf="formErrors.password.length"><span>{{formErrors.password}}</span></div>
-                    <ion-button [disabled]="!loginForm.valid" color="secondary" 
-                    expand="block" class="ion-margin-top" (click)="loginWithEmailAndPassord()">Login</ion-button>
+                   
+                    <ion-row>
+                      <ion-col>
+                           <ion-button [disabled]="!loginForm.valid" color="secondary" 
+                             expand="block" class="ion-margin-top" (click)="loginWithEmailAndPassord()">
+                               <ion-icon name="mail"></ion-icon>
+                                       Login
+                                     <ion-spinner name="dots" *ngIf="showSpinner"></ion-spinner>
+                             </ion-button>
+                      </ion-col>
+                      <ion-col>
+                            <ion-button expand="block" color="danger" class="ion-margin-top" (click)="googleLogin()">
+                                <ion-icon name="logo-google"></ion-icon>
+                                OOGLE
+                                <ion-spinner name="dots" *ngIf="showSpinner"></ion-spinner>
+                             </ion-button>
+                      </ion-col>
+                     </ion-row>
+                  
              
                     <a [routerLink]="['/signup']" class="ion-margin-top text-nodecoration">
                      <ion-button color="light" expand="block">SignUp</ion-button>
                     </a>
+
+
                   </form>
             </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
+
+<ion-spinner name="lines" class="page-loader" color="secondary" *ngIf="showPageLoader"></ion-spinner>
 
 </ion-content>

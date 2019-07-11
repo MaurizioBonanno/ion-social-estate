@@ -1,3 +1,4 @@
+import { HelperService } from './../providers/helper.service';
 import { WidgetUtilService } from './../providers/widget-util.service';
 import { FirebaseAuthService } from './../providers/firebase-auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -14,6 +15,10 @@ export class LoginPage implements OnInit {
   loginForm: FormGroup;
   email: FormControl;
   password: FormControl;
+  showSpinner = false;
+  showPageLoader = false;
+
+
   validationMessage = {};
   formErrors = {
     email: '',
@@ -21,7 +26,17 @@ export class LoginPage implements OnInit {
   };
 
   constructor(private firebaseAuthService: FirebaseAuthService,
-              private router: Router, private widgetUtils: WidgetUtilService) { }
+              private router: Router, private widgetUtils: WidgetUtilService,
+              private helperService: HelperService) {
+
+                this.showPageLoader = true;
+                this.firebaseAuthService.getLoggedInUser().subscribe( user => {
+                   if(user){
+                     this.router.navigate(['home']);
+                   }
+                   this.showPageLoader = false;
+                });
+               }
 
   ngOnInit() {
     this.createFormControl();
@@ -30,12 +45,15 @@ export class LoginPage implements OnInit {
 
   async loginWithEmailAndPassord(){
     try{
+      this.showSpinner = true;
       await this.firebaseAuthService.loginWithEmailAndPassword(this.email.value, this.password.value);
+      this.showSpinner = false;
       this.widgetUtils.showToast('Login success', 'SUCCESS');
       this.loginForm.reset();
       this.router.navigate(['/home']);
     } catch (error) {
        this.widgetUtils.showToast(error.message, 'ERROR');
+       this.showSpinner = false;
     }
   }
 
@@ -89,6 +107,24 @@ export class LoginPage implements OnInit {
         required: 'password è richiesta'
       }
     }
+  }
+
+  googleLogin() {
+     if (this.helperService.isNativePlatfomr()) {
+       // TODO metodo nativo
+     } else {
+       this.googleLoginWeb();
+     }
+  }
+
+  async googleLoginWeb() {
+    try {
+      await this.firebaseAuthService.googleLoginWeb();
+      this.widgetUtils.showToast('Login riuscito con successo', 'SUCCESS');
+    } catch ( error ) {
+      this.widgetUtils.showToast(error.message, 'ERROR');
+    }
+
   }
 
 }
