@@ -28,7 +28,8 @@
                       <ion-input formControlName="password" type="password"></ion-input>
                     </ion-item>
                     <div *ngIf="formErrors.password.length"><span>{{formErrors.password}}</span></div>
-                    <ion-button [disabled]="!loginForm.valid" color="secondary" expand="block" class="ion-margin-top">Login</ion-button>
+                    <ion-button [disabled]="!loginForm.valid" color="secondary" 
+                    expand="block" class="ion-margin-top" (click)="loginWithEmailAndPassord()">Login</ion-button>
              
                     <a [routerLink]="['/signup']" class="ion-margin-top text-nodecoration">
                      <ion-button color="light" expand="block">SignUp</ion-button>
