@@ -15,6 +15,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment.prod';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,7 +38,8 @@ import { ToastrModule } from 'ngx-toastr';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    GooglePlus
   ],
   bootstrap: [AppComponent]
 })

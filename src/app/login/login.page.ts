@@ -31,10 +31,12 @@ export class LoginPage implements OnInit {
 
                 this.showPageLoader = true;
                 this.firebaseAuthService.getLoggedInUser().subscribe( user => {
-                   if(user){
+                   if (user) {
                      this.router.navigate(['home']);
+                   } else {
+                     this.showPageLoader = false;
                    }
-                   this.showPageLoader = false;
+
                 });
                }
 
@@ -43,8 +45,8 @@ export class LoginPage implements OnInit {
     this.createForm();
   }
 
-  async loginWithEmailAndPassord(){
-    try{
+  async loginWithEmailAndPassord() {
+    try {
       this.showSpinner = true;
       await this.firebaseAuthService.loginWithEmailAndPassword(this.email.value, this.password.value);
       this.showSpinner = false;
@@ -78,17 +80,17 @@ export class LoginPage implements OnInit {
     this.loginForm.valueChanges.subscribe(result => this.onFormValueChanged(result));
   }
 
-  onFormValueChanged(result: any){
+  onFormValueChanged(result: any) {
      console.log('result:', result);
      const form = this.loginForm;
      // tslint:disable-next-line:forin
-     for (const formField in this.formErrors){
+     for (const formField in this.formErrors) {
        this.formErrors[formField] = '';
        const control = form.controls[formField];
        if (control && control.dirty && control.invalid) {
          const messageObj = this.validationMessage[formField];
          // tslint:disable-next-line:forin
-         for ( const key in control.errors ){
+         for ( const key in control.errors ) {
            // tslint:disable-next-line:no-unused-expression
            this.formErrors[formField] = this.formErrors[formField] + messageObj[key];
          }
@@ -106,14 +108,26 @@ export class LoginPage implements OnInit {
         minLength: 'minimo 5 caratteri',
         required: 'password è richiesta'
       }
-    }
+    };
   }
 
   googleLogin() {
      if (this.helperService.isNativePlatfomr()) {
-       // TODO metodo nativo
+       this.googleNativeLogin();
      } else {
        this.googleLoginWeb();
+     }
+  }
+
+  async googleNativeLogin() {
+     try {
+       this.showPageLoader = true;
+       await this.firebaseAuthService.googleNativeLogin();
+       this.widgetUtils.showToast('Login effettuato con successo' , 'SUCCESS');
+       this.showPageLoader = false;
+       this.router.navigate(['/home']);
+     } catch (error) {
+       this.widgetUtils.showToast(error.message, 'ERROR');
      }
   }
 
