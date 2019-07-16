@@ -2,7 +2,7 @@ import { HelperService } from './helper.service';
 
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { ToastController } from '@ionic/angular';
+import { ToastController, PopoverController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,8 @@ import { ToastController } from '@ionic/angular';
 export class WidgetUtilService {
 
   constructor(private toastService: ToastrService, private toastController: ToastController, 
-              private helperService: HelperService) { }
+              private helperService: HelperService,
+              private popoverController: PopoverController) { }
 
   showToast(message, title){
     if (this.helperService.isNativePlatfomr) {
@@ -34,6 +35,20 @@ export class WidgetUtilService {
       duration: 2000
     });
     toast.present();
+  }
+
+  async presentPopover(ev: any, component) {
+    const popover = await this.popoverController.create({
+      // tslint:disable-next-line:object-literal-shorthand
+      component: component,
+      event: ev,
+      translucent: true
+    });
+    return await popover.present();
+  }
+
+  async dismissPopover() {
+    await this.popoverController.dismiss();
   }
 
 

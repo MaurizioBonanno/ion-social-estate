@@ -1,3 +1,4 @@
+import { HomePopoverComponent } from './../home-popover/home-popover.component';
 import { WidgetUtilService } from './../providers/widget-util.service';
 import { FirebaseAuthService } from './../providers/firebase-auth.service';
 import { HelperService } from './../providers/helper.service';
@@ -17,15 +18,10 @@ export class HomePage {
     console.log('is platorm native', this.helperService.isNativePlatfomr());
   }
 
-  async logOut() {
-    try {
-      await this.firebaseAuthService.logOut();
-      this.widgetUtil.showToast('Non sei loggato', 'SUCCESS');
-      this.router.navigate(['login']);
-    } catch (error) {
-      this.widgetUtil.showToast(error.message, 'ERROR');
-    }
 
+
+  async openPopover(event){
+    await this.widgetUtil.presentPopover(event, HomePopoverComponent);
   }
 
 }

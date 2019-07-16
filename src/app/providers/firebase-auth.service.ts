@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { HelperService } from './helper.service';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Injectable } from '@angular/core';
@@ -11,9 +12,13 @@ export class FirebaseAuthService {
 
   constructor(private angularFireAuth: AngularFireAuth,
               private googlePlus: GooglePlus,
-              private helperService: HelperService) {
+              private helperService: HelperService,
+              private router: Router) {
     this.angularFireAuth.authState.subscribe( user => {
       console.log('Firebase auth service , user:', user ? user.toJSON() : user);
+      if (!user ) {
+        this.router.navigate(['/login']);
+      }
     });
    }
 

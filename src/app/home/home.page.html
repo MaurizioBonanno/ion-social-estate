@@ -6,9 +6,16 @@
     <ion-title>
       Home
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openPopover($event)" >
+        <ion-icon slot="icon-only" name="more">
+
+        </ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="logOut()">LogOut</ion-button>
+
 </ion-content>
