@@ -17,5 +17,39 @@
 </ion-header>
 
 <ion-content>
+<!-- contenuto della pagina-->
+  <ion-grid fixed>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-lg="6">
+        <!--Menu superiore-->
+        <ion-row>
+
+          <ion-col size="12">
+            <a [routerLink]="['/add-product']">
+             <ion-button details="true" color="primary" *ngIf="productListAvailable" class="ion-float-right no-text-decoration">
+               <ion-icon name="add-circle"></ion-icon> Add
+             </ion-button>
+            </a>
+          </ion-col>
+
+        </ion-row>
+
+        <!--Allego i prodotti -->
+        <div *ngIf="productListAvailable">
+         <ion-list *ngFor="let product of productsList">
+          <ion-item button (click)="openDetailsPage(product)" >
+            {{ product.name }}
+          </ion-item>
+         </ion-list>
+        </div>
+        <div *ngIf="productListAvailable && !productsList.length">
+          <h3>nessun prodotto trovato</h3>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <!--Spinner-->
+    <ion-spinner name="lines" class="page-loader" color="secondary" *ngIf="!productListAvailable"></ion-spinner>
+  </ion-grid>
 
 </ion-content>

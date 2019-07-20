@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Post</ion-title>
+    <ion-buttons slot="start">
+        <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid fixed>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-lg="10" >
+
+        <ion-card *ngIf="postDetail">
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">
+              <ion-icon color="primary" name="cube"></ion-icon>
+              {{postDetail.name}}
+            </ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+             <ion-list>
+               <ion-item button detail="false">
+                 <ion-label>
+                   Name
+                 </ion-label>
+                 <span>
+                   {{postDetail.name}}
+                 </span>
+               </ion-item>
+               <ion-item button detail="false">
+                  <ion-label>
+                   Price
+                  </ion-label>
+                  <span>
+                    {{postDetail.price}}
+                  </span>
+                </ion-item>
+                <ion-item button detail="false">
+                    <ion-label>
+                      Size
+                    </ion-label>
+                    <span>
+                      {{postDetail.size}}
+                    </span>
+                  </ion-item>
+                  <ion-item button detail="false">
+                      <ion-label>
+                        Brand
+                      </ion-label>
+                      <span>
+                        {{postDetail.brand}}
+                      </span>
+                    </ion-item>
+             </ion-list>
+             <ion-row class="ion-justify-content-center">
+               <ion-col size="6" size-lg="5" >
+                  <ion-button expand="block" color="light">
+                    <ion-icon name="trash"></ion-icon>
+                    Delete
+                  </ion-button>
+               </ion-col>
+               <ion-col size="6" size-lg="5">
+                 <ion-button expand="block" color="secondary">
+                   <ion-icon name="create" (click)="openEditPost()"></ion-icon>
+                      Update
+                   </ion-button>
+               </ion-col>
+
+             </ion-row>
+          </ion-card-content>
+
+
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+
+    <ion-spinner name="lines" class="page-loader" *ngIf="showLoader"></ion-spinner>
+
+  </ion-grid>
+
+</ion-content>

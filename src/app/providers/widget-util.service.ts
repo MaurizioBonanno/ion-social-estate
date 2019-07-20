@@ -28,7 +28,7 @@ export class WidgetUtilService {
 
   }
 
-  async showNativeToast(message){
+ private  async showNativeToast(message){
     const toast = await this.toastController.create({
       // tslint:disable-next-line:object-literal-shorthand
       message: message,
