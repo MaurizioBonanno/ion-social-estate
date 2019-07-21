@@ -1,3 +1,4 @@
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WidgetUtilService } from './../providers/widget-util.service';
 import { FirestoreDbService } from './../providers/firestore-db.service';
 import { Component, OnInit } from '@angular/core';
@@ -14,6 +15,14 @@ export class PostDetailsPage implements OnInit {
   postId = '';
   postDetail: any = null;
   showEditPostForm = false;
+  showLoadSpinner = false;
+
+  updateForm: FormGroup;
+
+  name: FormControl;
+  price: FormControl;
+  size: FormControl;
+  brand: FormControl;
 
   constructor(private activatedRoute: ActivatedRoute, private firestoreDbService: FirestoreDbService,
               private widgetUtil: WidgetUtilService) {
@@ -25,6 +34,32 @@ export class PostDetailsPage implements OnInit {
    }
 
   ngOnInit() {
+    this.createFormControl();
+    this.createForm();
+  }
+
+  createFormControl() {
+    this.name = new FormControl('', [
+      Validators.required
+    ]);
+    this.price = new FormControl('', [
+      Validators.required
+    ]);
+    this.size = new FormControl('', [
+      Validators.required
+    ]);
+    this.brand = new FormControl('', [
+      Validators.required
+    ]);
+  }
+
+  createForm() {
+    this.updateForm = new FormGroup({
+      name: this.name,
+      price: this.price,
+      size: this.size,
+      brand: this.brand,
+    });
   }
 
   async getDetails() {
@@ -42,6 +77,38 @@ export class PostDetailsPage implements OnInit {
 
   openEditPost() {
    this.showEditPostForm = true;
+   this.updateForm.reset();
+   this.updateForm.controls.name.setValue(this.postDetail.name);
+   this.updateForm.controls.price.setValue(this.postDetail.price);
+   this.updateForm.controls.size.setValue(this.postDetail.size);
+   this.updateForm.controls.brand.setValue(this.postDetail.brand);
+
+  }
+
+  async update() {
+    this.showLoadSpinner = true;
+    try {
+
+      const updateDetail = {
+         name: this.updateForm.controls.name.value,
+         price: this.updateForm.controls.price.value,
+         size: this.updateForm.controls.size.value,
+         brand: this.updateForm.controls.brand.value
+      };
+
+      await this.firestoreDbService.updateProduct(this.postId, updateDetail);
+      this.widgetUtil.showToast('Aggiornamento riuscito', 'SUCCESS');
+      this.showLoadSpinner = false;
+      this.getDetails();
+      this.cancel();
+     } catch (error) {
+       this.widgetUtil.showToast(error.message, 'ERROR');
+       this.showLoadSpinner = false;
+     }
+  }
+
+  cancel() {
+    this.showEditPostForm = false;
   }
 
 }

@@ -13,6 +13,8 @@
 
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-lg="10" >
+        
+
 
         <ion-card *ngIf="postDetail">
           <ion-card-header>
@@ -23,6 +25,9 @@
           </ion-card-header>
 
           <ion-card-content>
+
+            <!--Dettaglio-->
+      <div *ngIf="!showEditPostForm">
              <ion-list>
                <ion-item button detail="false">
                  <ion-label>
@@ -65,17 +70,67 @@
                   </ion-button>
                </ion-col>
                <ion-col size="6" size-lg="5">
-                 <ion-button expand="block" color="secondary">
-                   <ion-icon name="create" (click)="openEditPost()"></ion-icon>
+                 <ion-button expand="block" color="secondary"  (click)="openEditPost()">
+                   <ion-icon name="create"></ion-icon>
                       Update
                    </ion-button>
                </ion-col>
 
              </ion-row>
+            
+            </div>
+            <!--fine del contenuto dei dettagli-->
+
+            <!--form editing -->
+            <!--Form edit-->
+             <div >
+                <form [formGroup]="updateForm" *ngIf="showEditPostForm">
+
+                    <ion-item>
+                        <ion-label position="floating">Name</ion-label>
+                        <ion-input formControlName="name" type="text" ></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="floating">Price</ion-label>
+                        <ion-input formControlName="price" type="text"  ></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="floating">Size</ion-label>
+                        <ion-input formControlName="size" type="text"  ></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="floating">Brand</ion-label>
+                        <ion-input formControlName="brand" type="text" ></ion-input>
+                    </ion-item>
+                    <ion-row>
+                      <ion-col size="6">
+                        <ion-button  [disabled]="!updateForm.valid" expand="block" (click)="update()">
+                          <ion-icon name="bookmark"></ion-icon>
+                         Save <ion-spinner name="dots" *ngIf="showLoadSpinner"></ion-spinner>
+                        </ion-button>
+                      </ion-col>
+                      <ion-col size="6">
+                          <ion-button  color="light" expand="block" (click)="cancel()">
+                            <ion-icon name="close-circle" color="secondary"></ion-icon>
+                              Annulla
+                           </ion-button>
+                      </ion-col>
+                    </ion-row>
+                    
+                        
+                   
+                  </form >
+            </div>
+            <!--fine form edit-->
+
           </ion-card-content>
 
 
         </ion-card>
+
+      
+
+
 
       </ion-col>
     </ion-row>

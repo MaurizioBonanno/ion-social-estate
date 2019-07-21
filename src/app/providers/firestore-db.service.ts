@@ -47,4 +47,16 @@ export class FirestoreDbService {
        throw new Error(error);
      }
   }
+
+  async updateProduct(id, data) {
+    try {
+       // ALT+96 per accento grave
+       const result = await this.db.doc(`products/${id}`).update(data);
+       return result;
+    // tslint:disable-next-line:one-line
+    }catch (error) {
+      throw new Error(error);
+    }
+
+  }
 }
