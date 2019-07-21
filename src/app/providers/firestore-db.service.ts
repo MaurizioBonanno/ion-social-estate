@@ -59,4 +59,14 @@ export class FirestoreDbService {
     }
 
   }
+
+  async delete(id) {
+    try {
+      const result = await this.db.doc(`products/${id}`).delete();
+      return result;
+    // tslint:disable-next-line:whitespace
+    } catch(error) {
+      throw new Error(error);
+    }
+  }
 }

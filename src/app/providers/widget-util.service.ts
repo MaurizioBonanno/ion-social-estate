@@ -2,18 +2,19 @@ import { HelperService } from './helper.service';
 
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { ToastController, PopoverController } from '@ionic/angular';
+import { ToastController, PopoverController, AlertController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WidgetUtilService {
 
-  constructor(private toastService: ToastrService, private toastController: ToastController, 
+  constructor(private toastService: ToastrService, private toastController: ToastController,
               private helperService: HelperService,
-              private popoverController: PopoverController) { }
+              private popoverController: PopoverController,
+              private alertController: AlertController) { }
 
-  showToast(message, title){
+  showToast(message, title) {
     if (this.helperService.isNativePlatfomr) {
 
       this.showNativeToast(message);
@@ -21,14 +22,14 @@ export class WidgetUtilService {
     } else {
           if (title === 'SUCCESS') {
               this.toastService.success(message, title);
-          } else if ( title === 'ERROR'){
+          } else if ( title === 'ERROR') {
               this.toastService.error(message, title);
          }
     }
 
   }
 
- private  async showNativeToast(message){
+ private  async showNativeToast(message) {
     const toast = await this.toastController.create({
       // tslint:disable-next-line:object-literal-shorthand
       message: message,
@@ -49,6 +50,16 @@ export class WidgetUtilService {
 
   async dismissPopover() {
     await this.popoverController.dismiss();
+  }
+
+  async presentAlertConfirm(textHeader , msg , bottoni) {
+    const alert = await this.alertController.create({
+      header: textHeader,
+      message: msg,
+      buttons: bottoni
+    });
+
+    await alert.present();
   }
 
 

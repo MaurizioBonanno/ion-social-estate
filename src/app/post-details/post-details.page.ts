@@ -2,7 +2,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WidgetUtilService } from './../providers/widget-util.service';
 import { FirestoreDbService } from './../providers/firestore-db.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-details',
@@ -25,7 +25,8 @@ export class PostDetailsPage implements OnInit {
   brand: FormControl;
 
   constructor(private activatedRoute: ActivatedRoute, private firestoreDbService: FirestoreDbService,
-              private widgetUtil: WidgetUtilService) {
+              private widgetUtil: WidgetUtilService,
+              private router: Router) {
     this.activatedRoute.params.subscribe( result => {
        console.log('Dettaglio:', result);
        this.postId = result.id;
@@ -110,5 +111,38 @@ export class PostDetailsPage implements OnInit {
   cancel() {
     this.showEditPostForm = false;
   }
+
+  delete() {
+    this.widgetUtil.presentAlertConfirm(
+      'Eliminare?',
+      `Vuoi davvero eliminare ${this.postDetail.name}?`,
+      [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('operazione annullata');
+          }
+        },
+        {
+          text: 'SI',
+          // tslint:disable-next-line:whitespace
+          handler: async ()=> {
+            try {
+            await this.firestoreDbService.delete(this.postId);
+            this.widgetUtil.showToast('elemento cancellato con successo', 'SUCCESS');
+            this.router.navigate(['/home']);
+            console.log('cancellato?');
+            } catch (error) {
+              this.widgetUtil.showToast(error.message, 'ERROR');
+            }
+          }
+        }
+      ]
+    );
+  }
+
+
 
 }
