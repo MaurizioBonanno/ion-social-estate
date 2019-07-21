@@ -52,4 +52,13 @@ export class HomePage {
     this.router.navigate(['/post-details', product.id]);
   }
 
+  doRefresh(event) {
+    this.getProductList();
+    
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
+
 }

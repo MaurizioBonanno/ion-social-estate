@@ -17,6 +17,12 @@
 </ion-header>
 
 <ion-content>
+  <!-- Default Refresher -->
+
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content refreshingSpinner="lines"></ion-refresher-content>
+    </ion-refresher>
+
 <!-- contenuto della pagina-->
   <ion-grid fixed>
     <ion-row class="ion-justify-content-center">
