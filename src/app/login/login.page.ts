@@ -98,18 +98,7 @@ export class LoginPage implements OnInit {
      }
   }
 
-  createValidationMessage() {
-    this.validationMessage = {
-      email: {
-        email: 'Email deve essere valida',
-        required: 'email è richiesta'
-      },
-      password : {
-        minLength: 'minimo 5 caratteri',
-        required: 'password è richiesta'
-      }
-    };
-  }
+
 
   googleLogin() {
      if (this.helperService.isNativePlatfomr()) {

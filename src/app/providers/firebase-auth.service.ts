@@ -1,3 +1,5 @@
+import { Users } from './../interfaces/users';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { HelperService } from './helper.service';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
@@ -5,17 +7,25 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseAuthService {
 
+
   constructor(private angularFireAuth: AngularFireAuth,
               private googlePlus: GooglePlus,
               private helperService: HelperService,
-              private router: Router) {
+              private router: Router,
+              private afs: AngularFirestore) {
     this.angularFireAuth.authState.subscribe( user => {
       console.log('Firebase auth service , user:', user ? user.toJSON() : user);
+      if (user) {
+        console.log('--------SONO NEL COSTRUTTORE TROVA UTENTE-----');
+        this.registerUserOnFirestore(user);
+      }
+
       if (!user ) {
         this.router.navigate(['/login']);
       }
@@ -50,7 +60,7 @@ export class FirebaseAuthService {
   async logOut() {
     try {
           const result = this.angularFireAuth.auth.signOut();
-          if (this.helperService.isNativePlatfomr()){
+          if (this.helperService.isNativePlatfomr()) {
              this.googleNativeLogout();
           }
           return result ;
@@ -72,8 +82,8 @@ export class FirebaseAuthService {
   async googleNativeLogin() {
     try {
      const result = await this.googlePlus.login({
-       'webClientId': '655074127481-7kd8pqga5u0rpan3sjc78r1omt6fkdlp.apps.googleusercontent.com',
-       'offline': true
+       webClientId: '655074127481-7kd8pqga5u0rpan3sjc78r1omt6fkdlp.apps.googleusercontent.com',
+       offline: true
      });
 
      // tslint:disable-next-line: deprecation
@@ -84,10 +94,30 @@ export class FirebaseAuthService {
     }
   }
 
-  async googleNativeLogout(){
+  async googleNativeLogout() {
       await this.googlePlus.logout();
   }
 
+  async registerUserOnFirestore(user) {
 
+    await this.afs.doc(`profili/${user.uid}`).ref.get().then(dc => {
+      if (dc.exists) {
+        console.log('----------UTENTE TROVATO----------');
+      } else {
+        const us: Users = {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          roles: {
+            admin: false,
+            subscriber: true
+          }
+        };
+        return this.afs.doc(`profili/${user.uid}`).set(us, {merge: true});
+      }
+    });
+
+  }
 
 }

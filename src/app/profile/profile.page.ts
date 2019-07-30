@@ -1,6 +1,7 @@
 import { WidgetUtilService } from './../providers/widget-util.service';
 import { Component, OnInit } from '@angular/core';
 import { FirebaseAuthService } from '../providers/firebase-auth.service';
+import { ProfiliService } from '../providers/profili.service';
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +14,8 @@ export class ProfilePage implements OnInit {
   profileAvaileble = false;
 
   constructor(private firebaseAuthService: FirebaseAuthService,
-              private widgteUtilService: WidgetUtilService) {
+              private widgteUtilService: WidgetUtilService,
+              private pfs: ProfiliService) {
     this.getProfile();
   }
 
