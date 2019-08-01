@@ -4,24 +4,46 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      List
+     Utenti
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let item of items">
-      <ion-icon [name]="item.icon" slot="start"></ion-icon>
-      {{item.title}}
-      <div class="item-note" slot="end">
-        {{item.note}}
-      </div>
-    </ion-item>
-  </ion-list>
-  <!--
-    <div *ngIf="selectedItem" padding>
-      You navigated here from <b>{{selectedItem.title }}</b>
-    </div>
-  -->
+  <ion-grid fixed>
+
+    <ion-row class="ion-justify-content-center">
+
+      <ion-col size="12">
+        
+          <ion-list *ngFor="let user of usersList">
+
+            <ion-item>
+              <ion-row>
+                <ion-col>
+                  <ion-icon name="person"  slot="start"></ion-icon>
+                </ion-col>
+                <ion-col>
+                  <ion-img class="user-avatar" src="{{user.photoURL || './assets/avatar.png'}}"></ion-img> 
+                </ion-col>
+                <ion-col>
+                  <ion-item button (click)="openDetailsPage(user)" >
+                    {{ user.displayName }}
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  email: {{user.email}}
+                </ion-col>
+
+                </ion-row>
+            </ion-item>
+          </ion-list>
+        
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
+
+
 </ion-content>

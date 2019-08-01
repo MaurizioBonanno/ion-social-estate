@@ -13,6 +13,8 @@ export class ProfilePage implements OnInit {
   profileInfo: any = null;
   profileAvaileble = false;
 
+
+
   constructor(private firebaseAuthService: FirebaseAuthService,
               private widgteUtilService: WidgetUtilService,
               private pfs: ProfiliService) {
@@ -24,6 +26,7 @@ export class ProfilePage implements OnInit {
     this.firebaseAuthService.getLoggedInUser().subscribe( user => {
       if (user) {
         this.profileInfo = user.toJSON();
+
       } else {
         this.profileInfo = null;
       }

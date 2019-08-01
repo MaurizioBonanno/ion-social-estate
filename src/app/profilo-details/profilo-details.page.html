@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Dettaglio {{ userDetail.displayName }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="12" size-lg="8">
+      <ion-row>
+        <ion-col>
+            <ion-img class="user-avatar" src="{{ userDetail.photoURL || './assets/avatar.png'}}"></ion-img>
+        </ion-col>
+        <ion-col>
+          {{ userDetail.displayName }}
+        </ion-col>
+        <ion-col>
+          {{ userDetail.email }}
+        </ion-col>
+        <ion-col>
+         Admin: {{ userDetail.roles.admin  }}
+        </ion-col>
+        <ion-col>
+          Subscriber: {{userDetail.roles.subscriber }}
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

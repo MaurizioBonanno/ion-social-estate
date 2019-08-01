@@ -9,6 +9,8 @@
 
 <ion-content>
 
+  
+
   <ion-grid fixed>
 
       <ion-row class="ion-justify-content-center" *ngIf="profileAvaileble && profileInfo">
@@ -17,7 +19,6 @@
               <ion-card-header>
                 <ion-card-title class="ion-text-center">
                   <ion-icon color="secondary" name="person"></ion-icon>
-                  Profilo
                 </ion-card-title>
               </ion-card-header>
                 <ion-card-content>
@@ -35,6 +36,7 @@
                             Name
                           </ion-label>
                           <span> {{ profileInfo.displayName || '-' }} </span>
+                          
                         </ion-item>
 
                         <ion-item>

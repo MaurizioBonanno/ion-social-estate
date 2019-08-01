@@ -20,7 +20,8 @@ const routes: Routes = [
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'add-product', loadChildren: './add-product/add-product.module#AddProductPageModule' },
   { path: 'post-details/:id', loadChildren: './post-details/post-details.module#PostDetailsPageModule' },
-  { path: 'about', loadChildren: './about/about.module#AboutPageModule' }
+  { path: 'about', loadChildren: './about/about.module#AboutPageModule' },
+  { path: 'profilo-details/:id', loadChildren: './profilo-details/profilo-details.module#ProfiloDetailsPageModule' }
 ];
 
 @NgModule({
