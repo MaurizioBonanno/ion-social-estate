@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>profile</ion-title>
+    <ion-title>Profilo</ion-title>
     <ion-buttons slot="start">
         <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
@@ -9,57 +9,32 @@
 
 <ion-content>
 
-  
 
-  <ion-grid fixed>
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="12" size-lg="8">
 
-      <ion-row class="ion-justify-content-center" *ngIf="profileAvaileble && profileInfo">
-          <ion-col size="12" size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-card>
-              <ion-card-header>
-                <ion-card-title class="ion-text-center">
-                  <ion-icon color="secondary" name="person"></ion-icon>
-                </ion-card-title>
-              </ion-card-header>
-                <ion-card-content>
+        <ion-card>
+            <ion-img class="user-avatar" src="{{ utente.__zone_symbol__value.photoURL || './assets/avatar.png'}}"></ion-img>
+            <ion-card-header>
+              <ion-card-subtitle>Profilo</ion-card-subtitle>
+              <ion-card-title>{{ utente.__zone_symbol__value.displayName }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+             <ion-item>
+               email: {{ utente.__zone_symbol__value.email }}
+             </ion-item> 
+             <ion-item >
+              Admin:  {{ utente.__zone_symbol__value.roles.admin }}
+             </ion-item>
+             <ion-item >
+                Subscriber :  {{ utente.__zone_symbol__value.roles.subscriber }}
+              </ion-item>
+            
+            </ion-card-content>
+          </ion-card>
+       
+    </ion-col>
+  </ion-row>
 
-                  <ion-row>
-                    <ion-col size="12">
-                       <ion-img class="user-avatar" src="{{profileInfo.photoURL || './assets/avatar.png'}}"></ion-img>
-                    </ion-col>
-
-                    <ion-col size="12">
-                      <ion-list>
-
-                        <ion-item>
-                          <ion-label>
-                            Name
-                          </ion-label>
-                          <span> {{ profileInfo.displayName || '-' }} </span>
-                          
-                        </ion-item>
-
-                        <ion-item>
-                            <ion-label>
-                              Email
-                            </ion-label>
-                            <span> {{ profileInfo.email || '-' }} </span>
-                        </ion-item>
-
-                      </ion-list>
-                    </ion-col>
-
-
-
-                  </ion-row>
-
-                </ion-card-content>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-
-    <ion-spinner name="lines" class="page-loader" color="secondary" *ngIf="!profileAvaileble"></ion-spinner>
-
-  </ion-grid>
 
 </ion-content>
