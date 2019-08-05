@@ -1,3 +1,4 @@
+
 import { Users } from './../interfaces/users';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
@@ -13,6 +14,7 @@ import { auth } from 'firebase';
 })
 export class FirebaseAuthService {
 
+  utente: any;
 
   constructor(private angularFireAuth: AngularFireAuth,
               private googlePlus: GooglePlus,
@@ -103,6 +105,8 @@ export class FirebaseAuthService {
     await this.afs.doc(`profili/${user.uid}`).ref.get().then(dc => {
       if (dc.exists) {
         console.log('----------UTENTE TROVATO----------');
+        this.utente = dc.data();
+        console.log('ADMIN------', this.isAdmin());
       } else {
         const us: Users = {
           uid: user.uid,
@@ -118,6 +122,30 @@ export class FirebaseAuthService {
       }
     });
 
+  }
+
+  getMyUtente() {
+    try {
+     if (this.utente) {
+       return this.utente;
+     }
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  getMyRoles() {
+    try {
+      if (this.utente) {
+        return this.utente.roles;
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  isAdmin() {
+    return this.utente.roles.admin;
   }
 
 }

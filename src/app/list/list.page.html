@@ -27,14 +27,16 @@
                   <ion-img class="user-avatar" src="{{user.photoURL || './assets/avatar.png'}}"></ion-img> 
                 </ion-col>
                 <ion-col>
-                  <ion-item button (click)="openDetailsPage(user)" >
+                  <ion-item>
                     {{ user.displayName }}
                   </ion-item>
                 </ion-col>
                 <ion-col>
                   email: {{user.email}}
                 </ion-col>
-
+                  <ion-item  button (click)="openDetailsPage(user)">
+                     Dettagli 
+                  </ion-item>
                 </ion-row>
             </ion-item>
           </ion-list>

@@ -26,8 +26,61 @@
         <ion-col>
           Subscriber: {{userDetail.roles.subscriber }}
         </ion-col>
+
+        <ion-row *ngIf="isAdmin">
+            <ion-col size="12">
+              <ion-button  expand="block" (click)="showUpdateForm()">
+                <ion-icon name="create"></ion-icon>
+
+                       Edit
+                
+              </ion-button>
+            </ion-col>
+          </ion-row>
       </ion-row>
+
     </ion-col>
   </ion-row>
+
+<!-- edit -->
+  <div >
+      <form [formGroup]="updateForm" *ngIf="showForm">
+
+          <ion-item>
+              <ion-label position="floating">Name</ion-label>
+              <ion-input formControlName="nome" type="text" ></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label position="floating">@mail</ion-label>
+              <ion-input formControlName="mail" type="text"  ></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label>Admin</ion-label>
+              <ion-checkbox formControlName="ad" type="text"  ></ion-checkbox>
+          </ion-item>
+          <ion-item>
+              <ion-label>Subscriber</ion-label>
+              <ion-checkbox formControlName="subs" type="text" ></ion-checkbox>
+          </ion-item>
+          <ion-row>
+            <ion-col size="6">
+              <ion-button  [disabled]="!updateForm.valid" expand="block" (click)="update()">
+                <ion-icon name="bookmark"></ion-icon>
+               Save <ion-spinner name="dots" *ngIf="showLoadSpinner"></ion-spinner>
+              </ion-button>
+            </ion-col>
+            <ion-col size="6">
+                <ion-button  color="light" expand="block" (click)="cancel()">
+                  <ion-icon name="close-circle" color="secondary"></ion-icon>
+                    Annulla
+                 </ion-button>
+            </ion-col>
+          </ion-row>
+          
+              
+         
+        </form >
+  </div>
+  <!--fine form edit-->
 
 </ion-content>

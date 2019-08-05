@@ -1,3 +1,4 @@
+import { FirebaseAuthService } from './../providers/firebase-auth.service';
 import { Router } from '@angular/router';
 import { ProfiliService } from './../providers/profili.service';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -13,7 +14,9 @@ import { map } from 'rxjs/operators';
 export class ListPage implements OnInit {
 
  usersList: Array<any> = [];
- constructor(private pfs: ProfiliService, private router: Router) {}
+ constructor(private pfs: ProfiliService, private router: Router) {
+
+ }
 
 
   ngOnInit() {
