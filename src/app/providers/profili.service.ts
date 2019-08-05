@@ -67,4 +67,13 @@ export class ProfiliService {
     }
  }
 
+ async updateProfile(id: string, data: any) {
+   try {
+      const result = await this.db.doc(`profili/${id}`).update(data);
+      return result;
+   } catch (error) {
+     throw new Error(error);
+   }
+ }
+
 }

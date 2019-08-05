@@ -13,7 +13,10 @@
   <ion-row class="ion-justify-content-center">
     <ion-col size="12" size-lg="8">
 
+      <div *ngIf="profileAvaileble">
+
         <ion-card>
+
             <ion-img class="user-avatar" src="{{ utente.__zone_symbol__value.photoURL || './assets/avatar.png'}}"></ion-img>
             <ion-card-header>
               <ion-card-subtitle>Profilo</ion-card-subtitle>
@@ -29,10 +32,54 @@
              <ion-item >
                 Subscriber :  {{ utente.__zone_symbol__value.roles.subscriber }}
               </ion-item>
+
+              <ion-item>
+                <ion-button slot="end" expand="block" color="secondary"  (click)="openEditProfilo()">
+                  <ion-icon name="create"></ion-icon>
+                     Update
+                  </ion-button>
+              </ion-item>
+
+              <!--versione update-->
+              <div *ngIf="showEditProfileForm">
+                <form [formGroup]="updateForm" *ngIf="showEditProfileForm">
+                    <ion-item>
+                        <ion-label position="floating">Name</ion-label>
+                        <ion-input formControlName="nome" type="text" ></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="floating">@mail</ion-label>
+                        <ion-input formControlName="mail" type="text" ></ion-input>
+                    </ion-item>
+                    
+                    <ion-row>
+                        <ion-col size="6">
+                          <ion-button  [disabled]="!updateForm.valid" expand="block" (click)="update()">
+                            <ion-icon name="bookmark"></ion-icon>
+                           Save <ion-spinner name="dots" *ngIf="showLoadSpinner"></ion-spinner>
+                          </ion-button>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-button  color="light" expand="block" (click)="cancel()">
+                              <ion-icon name="close-circle" color="secondary"></ion-icon>
+                                Annulla
+                             </ion-button>
+                        </ion-col>
+                      </ion-row>
+
+                </form>
+
+
+              </div>
             
             </ion-card-content>
+
+
           </ion-card>
-       
+
+          <ion-spinner name="lines" class="page-loader" color="secondary" *ngIf="!profileAvaileble"></ion-spinner>
+
+        </div>
     </ion-col>
   </ion-row>
 
