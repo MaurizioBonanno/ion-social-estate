@@ -1,3 +1,12 @@
+
+<ion-list *ngIf="menuAdminAvailable">
+  <ion-item *ngFor="let menu of menuAdmin">
+    <ion-label>
+      {{ menu.title }}
+    </ion-label>
+  </ion-item>
+</ion-list>
+
 <ion-list>
   <ion-item button (click)="openProfilePage()" detail="false">
     <ion-label>

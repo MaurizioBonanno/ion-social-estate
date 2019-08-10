@@ -1,7 +1,9 @@
+import { MenuService } from './../providers/menu.service';
 import { Router } from '@angular/router';
 import { WidgetUtilService } from './../providers/widget-util.service';
 import { FirebaseAuthService } from './../providers/firebase-auth.service';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home-popover',
@@ -10,9 +12,40 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePopoverComponent implements OnInit {
 
-  constructor(private firebaseAuthService: FirebaseAuthService, private widgetUtil: WidgetUtilService, private router: Router) { }
+  isAdmin = false;
+  menuAdmin: Array<any> = [];
+  menuAdminAvailable = false;
 
-  ngOnInit() {}
+  constructor(private firebaseAuthService: FirebaseAuthService,
+              private widgetUtil: WidgetUtilService,
+              private router: Router,
+              private ms: MenuService) { }
+
+  ngOnInit() {
+
+    this.isAdmin = this.firebaseAuthService.isAdmin();
+    if (this.isAdmin) {
+      this.getMenu();
+    }
+  }
+
+   getMenu() {
+    this.menuAdminAvailable = false;
+    this.ms.getMenuAdmin().subscribe( result => {
+      console.log('Risultati:', result);
+      this.menuAdmin = result;
+      if (this.menuAdmin.length < 0) {
+        this.menuAdminAvailable = false;
+      } else {
+        this.menuAdminAvailable = true;
+      }
+
+    } , (error) => {
+      console.log('Errore:', error.message);
+      this.widgetUtil.showToast(error.message, 'ERROR');
+      this.menuAdminAvailable = true;
+    });
+  }
 
   async logOut() {
     try {

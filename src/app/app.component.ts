@@ -1,3 +1,4 @@
+import { MenuService } from './providers/menu.service';
 import { FirebaseAuthService } from './providers/firebase-auth.service';
 import { Component } from '@angular/core';
 
@@ -34,7 +35,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private firebaseAuthService: FirebaseAuthService
+    private firebaseAuthService: FirebaseAuthService,
+    private ms: MenuService
   ) {
     this.initializeApp();
   }
@@ -47,9 +49,10 @@ export class AppComponent {
     });
   }
 
-  checkUser(){
+
+  checkUser() {
      this.firebaseAuthService.getLoggedInUser().subscribe( user => {
-       if(user){
+       if (user) {
          this.isLoggedIn = true;
          console.log('Utente autenticato , console di app component');
        } else {
