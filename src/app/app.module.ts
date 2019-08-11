@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment.prod';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
-
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -35,7 +35,8 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
       preventDuplicates: true,
       closeButton: true
     }),
-    HomePageModule
+    HomePageModule,
+    NgxDatatableModule
   ],
   providers: [
     StatusBar,

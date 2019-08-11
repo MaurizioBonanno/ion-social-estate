@@ -1,3 +1,4 @@
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FirestoreDbService } from './../providers/firestore-db.service';
 import { HomePopoverComponent } from './../home-popover/home-popover.component';
 import { WidgetUtilService } from './../providers/widget-util.service';
@@ -5,7 +6,6 @@ import { FirebaseAuthService } from './../providers/firebase-auth.service';
 import { HelperService } from './../providers/helper.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -15,7 +15,6 @@ export class HomePage {
 
   productsList: Array<any> = [];
   productListAvailable = false;
-
 
   constructor(private helperService: HelperService,
               private widgetUtil: WidgetUtilService,

@@ -23,7 +23,7 @@ export class AppComponent {
       icon: 'information-circle'
     },
     {
-      title: 'List',
+      title: 'Utenti',
       url: '/list',
       icon: 'list'
     }

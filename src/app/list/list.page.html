@@ -12,40 +12,43 @@
 <ion-content>
   <ion-grid fixed>
 
-    <ion-row class="ion-justify-content-center">
 
-      <ion-col size="12">
         
-          <ion-list *ngFor="let user of usersList">
-
-            <ion-item>
-              <ion-row>
-                <ion-col>
-                  <ion-icon name="person"  slot="start"></ion-icon>
-                </ion-col>
-                <ion-col>
-                  <ion-img class="user-avatar" src="{{user.photoURL || './assets/avatar.png'}}"></ion-img> 
-                </ion-col>
-                <ion-col>
-                  <ion-item>
-                    {{ user.displayName }}
-                  </ion-item>
-                </ion-col>
-                <ion-col>
-                  email: {{user.email}}
-                </ion-col>
-                  <ion-item  button (click)="openDetailsPage(user)">
-                     Dettagli 
-                  </ion-item>
-                </ion-row>
-            </ion-item>
-          </ion-list>
+        <ngx-datatable class="fullscreen material"
+             [rowHeight]="100"
+             [rows]="usersList" 
+             [columnMode]="'force'" 
+             [sortType]="'multi'" 
+             [reorderable]="false">
+          <ngx-datatable-column name="photoURL">
+            <ng-template ngx-datatable-header-template resizeable dragging>
+              Avatar
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <ion-img class="user-avatar" src="{{row.photoURL}}"></ion-img> 
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="DisplayName">
+            <ng-template ngx-datatable-header-template resizeable="true">
+              Nome
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="email"></ngx-datatable-column>
+          <ngx-datatable-column name="id">
+            <ng-template ngx-datatable-header-template>
+              Action
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <ion-button size="small" outline color="primary" (click)="openDetailsPage(row)">Details</ion-button>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
         
-      </ion-col>
-
-    </ion-row>
+   
 
   </ion-grid>
+
+  <!--Data Table-->
 
 
 </ion-content>
